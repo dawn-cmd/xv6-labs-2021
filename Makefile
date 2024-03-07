@@ -196,6 +196,7 @@ UPROGS=\
 	$U/_pingpong\
 	$U/_sleep\
 	$U/_primes\
+	$U/_find\
 
 
 
