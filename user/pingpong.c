@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
         close(p_l_to_r[0]);
         pipe(p_r_to_l);
         write(p_r_to_l[1], &i, sizeof(i));
-        // printf("%d: send pong\n", getpid());
         close(p_r_to_l[1]);
         exit(0);
     }
@@ -24,7 +23,6 @@ int main(int argc, char *argv[])
     {
         close(p_l_to_r[0]);
         write(p_l_to_r[1], &i, sizeof(i));
-        // printf("%d: send ping\n", getpid());
         close(p_l_to_r[1]);
         wait(0);
         close(p_r_to_l[1]);
