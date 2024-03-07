@@ -5,18 +5,11 @@
 
 char *fmtname(char *path)
 {
-    static char buf[DIRSIZ + 1];
     char *p;
-    // Find first character after last slash.
     for (p = path + strlen(path); p >= path && *p != '/'; p--)
         ;
     p++;
-    // Return blank-padded name.
-    if (strlen(p) >= DIRSIZ)
-        return p;
-    memmove(buf, p, strlen(p));
-    memset(buf + strlen(p), ' ', DIRSIZ - strlen(p));
-    return buf;
+    return p;
 }
 
 void find(char *path, char *target)
@@ -58,9 +51,6 @@ void find(char *path, char *target)
         *p++ = '/';
         while (read(fd, &de, sizeof(de)) == sizeof(de))
         {
-
-            printf("%s\n", fmtname(buf));
-            
             if (de.inum == 0)
                 continue;
             memmove(p, de.name, DIRSIZ);
@@ -69,11 +59,12 @@ void find(char *path, char *target)
             {
                 printf("find: cannot stat %s\n", buf);
                 continue;
-            }
+            } 
             if (strcmp(fmtname(buf), target) == 0)
-                printf("%s %d %d %d\n", buf, st.type, st.ino, st.size);
-            if (strcmp(fmtname(buf), ".") && strcmp(fmtname(buf), ".."))
-                find(buf, target);
+                printf("%s\n", buf);
+            if (strcmp(fmtname(buf), ".") == 0 || strcmp(fmtname(buf), "..") == 0)
+                continue;
+            find(buf, target);
         }
         break;
     }
