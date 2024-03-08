@@ -43,7 +43,6 @@ int main(int argc, char *argv[])
     strcpy(offset, readline());
     while (strcmp(offset, ""))
     {
-        // printf("%s\n", offset);
         args[argc - 1] = offset;
         if (fork() == 0)
         {
