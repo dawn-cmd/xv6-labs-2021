@@ -134,6 +134,9 @@ static uint64 (*syscalls[])(void) = {
 void
 syscall(void)
 {
+  char const *syscall_names[] = {"fork", "exit", "wait", "pipe", "read",
+  "kill", "exec", "fstat", "chdir", "dup", "getpid", "sbrk", "sleep",
+  "uptime", "open", "write", "mknod", "unlink", "link", "mkdir","close","trace","sysinfo"};
   int num;
   struct proc *p = myproc();
 
@@ -141,8 +144,7 @@ syscall(void)
   if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
     p->trapframe->a0 = syscalls[num]();
     if (p->mask & (1 << num)) {
-      printf("%d %s: syscall %d -> %d\n",
-              p->pid, p->name, num, p->trapframe->a0);
+      printf("%d: syscall %s -> %d\n", p->pid, syscall_names[num - 1], p->trapframe->a0);
     }
   } else {
     printf("%d %s: unknown sys call %d\n",
