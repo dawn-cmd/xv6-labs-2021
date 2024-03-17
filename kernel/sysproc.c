@@ -8,9 +8,6 @@
 #include "proc.h"
 #include "sysinfo.h"
 
-extern uint64 freemem(void);
-extern uint64 unusedproc(void);
-
 uint64
 sys_exit(void)
 {
@@ -108,6 +105,9 @@ uint64 sys_trace(void)
   myproc()->mask = mask;
   return 0;
 }
+
+extern uint64 freemem(void);
+extern uint64 unusedproc(void);
 
 uint64 sys_sysinfo(void)
 {
